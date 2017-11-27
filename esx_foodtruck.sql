@@ -1,6 +1,6 @@
 SET @job_name = 'foodtruck';
 SET @society_name = 'society_foodtruck';
-SET @job_Name_Caps = 'RasTacos';
+SET @job_Name_Caps = 'Foodtruck';
 
 
 
