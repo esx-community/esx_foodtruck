@@ -8,7 +8,6 @@ local minute = 60 * seconde
 Config.Fridge = {
 	meat = 300,
 	packaged_chicken = 100,
-	fish = 100,
 	bread = 200,
 	water = 100,
 	cola = 100,
