@@ -163,9 +163,7 @@ function OpenFoodTruckActionsMenu()
 	}
 
 	if PlayerData.job ~= nil and PlayerData.job.grade_name == 'boss' then
-  		table.insert(elements, {label = _U('withdraw_society'), value = 'withdraw_society_money'})
-  		table.insert(elements, {label = _U('deposit_society'),  value = 'deposit_money'})
-  		table.insert(elements, {label = _U('wash_money'),       value = 'wash_money'})
+  		table.insert(elements, {label = _U('boss_actions'), value = 'boss_actions'})
 	end
 
 	ESX.UI.Menu.CloseAll()
@@ -222,68 +220,14 @@ function OpenFoodTruckActionsMenu()
 				end)
 			end
 
-			if data.current.value == 'withdraw_society_money' then
-				ESX.UI.Menu.Open(
-					'dialog', GetCurrentResourceName(), 'withdraw_society_money_amount',
-					{
-						title = _U('withdraw_amount')
-					},
-					function(data, menu)
-						local amount = tonumber(data.value)
-						if amount == nil then
-							ESX.ShowNotification(_U('invalid_amount'))
-						else
-							menu.close()
-							TriggerServerEvent('esx_society:withdrawMoney', 'foodtruck', amount)
-						end
-					end,
-					function(data, menu)
-						menu.close()
-					end
-				)
-			end
+			if data.current.value == 'boss_actions' then
 
-			if data.current.value == 'deposit_money' then
-				ESX.UI.Menu.Open(
-					'dialog', GetCurrentResourceName(), 'deposit_money_amount',
-					{
-						title = _U('deposit_amount')
-					},
-					function(data, menu)
-						local amount = tonumber(data.value)
-						if amount == nil then
-							ESX.ShowNotification(_U('invalid_amount'))
-						else
-							menu.close()
-							TriggerServerEvent('esx_society:depositMoney', 'foodtruck', amount)
-						end
-					end,
-					function(data, menu)
-						menu.close()
-					end
-				)
-			end
+                TriggerEvent('esx_society:openBossMenu', 'foodtruck', function(data, menu)
+                    menu.close()
+                end)
 
-			if data.current.value == 'wash_money' then
-				ESX.UI.Menu.Open(
-					'dialog', GetCurrentResourceName(), 'wash_money_amount',
-					{
-						title = _U('wash_amount')
-					},
-					function(data, menu)
-						local amount = tonumber(data.value)
-						if amount == nil then
-							ESX.ShowNotification(_U('invalid_amount'))
-						else
-							menu.close()
-							TriggerServerEvent('esx_society:washMoney', 'foodtruck', amount)
-						end
-					end,
-					function(data, menu)
-						menu.close()
-					end
-				)
-			end
+            end
+
 		end,
 		function(data, menu)
 			menu.close()

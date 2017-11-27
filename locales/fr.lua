@@ -23,13 +23,7 @@ Locales['fr'] = {
   ['gears'] = 'matériel',
 
   -- Boss Menu
-  ['deposit_society'] = 'déposer argent',
-  ['withdraw_society'] = 'retirer argent société',
-  ['withdraw_amount'] = 'montant du retrait',
-  ['deposit_amount'] = 'montant du dépot',
-  ['wash_amount'] = 'montant à blanchir',
-  ['invalid_amount'] = 'montant invalide',
-  ['wash_money'] = 'blanchir argent',
+  ['boss_actions'] = 'actions patron',
 
   -- Food
   ['grill'] = 'grill',
