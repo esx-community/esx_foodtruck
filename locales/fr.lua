@@ -21,6 +21,7 @@ Locales['fr'] = {
   ['cook'] = 'préparer',
   ['billing'] = 'facturation',
   ['gears'] = 'matériel',
+  ['purchased'] = 'Achat effectué.',
 
   -- Boss Menu
   ['boss_actions'] = 'actions patron',
@@ -35,6 +36,9 @@ Locales['fr'] = {
   ['vegetables'] = 'légumes',
   ['tacos'] = 'tacos',
   ['burger'] = 'burger',
+  ['drank_coke'] = 'Vous avez bu un ~b~Cola',
+  ['eat_burger'] = 'Vous avez mangé un ~b~Burger',
+  ['eat_taco'] = 'Vous avez mangé un ~b~Tacos',
 
   -- F6 Menu
 
@@ -56,5 +60,5 @@ Locales['fr'] = {
   ['need_more_exp'] = 'Vous n\'êtes ~r~pas assez expérimenté~s~ pour effectuer cette action.',
   ['foodtruck_menu'] = 'appuyez sur ~INPUT_CONTEXT~ pour accéder menu.',
   ['foodtruck_market_menu'] = 'appuyez sur ~INPUT_CONTEXT~ pour accéder au marché.',
-
+  ['no_money'] = 'Vous n\'avez pas assez d\'argent',
 }

@@ -62,18 +62,18 @@ AddEventHandler('esx_foodtruck:buyItem', function(qtty, item)
 				if xPlayer.getMoney() > total then
 					xPlayer.addInventoryItem(item, delta)
 					xPlayer.removeMoney(total)
-					TriggerClientEvent('esx:showNotification', _source, 'Achat effectué.')
+					TriggerClientEvent('esx:showNotification', _source, _U('purchased'))
 				else
-					TriggerClientEvent('esx:showNotification', _source, 'Vous n\'avez pas assez d\'argent')
+					TriggerClientEvent('esx:showNotification', _source, _U('no_money'))
 				end
 			else
 				local total = MarketPrices[i].price * qtty
 				if xPlayer.getMoney() > total then
 					xPlayer.addInventoryItem(item, qtty)
 					xPlayer.removeMoney(total)
-					TriggerClientEvent('esx:showNotification', _source, 'Achat effectué.')
+					TriggerClientEvent('esx:showNotification', _source, _U('purchased'))
 				else
-					TriggerClientEvent('esx:showNotification', _source, 'Vous n\'avez pas assez d\'argent!')
+					TriggerClientEvent('esx:showNotification', _source, _U('no_money'))
 				end
 			end
 			break
@@ -103,7 +103,7 @@ ESX.RegisterUsableItem('cola', function(source)
 	xPlayer.removeInventoryItem('cola', 1)
 	TriggerClientEvent('esx_status:add', source, 'thirst', 300000)
 	TriggerClientEvent('esx_basicneeds:onDrink', source, 'prop_ecola_can')
-    TriggerClientEvent('esx:showNotification', source, 'Vous avez bu un ~b~Cola')
+    TriggerClientEvent('esx:showNotification', source, _U('drank_coke'))
 end)
 
 ESX.RegisterUsableItem('burger', function(source)
@@ -111,7 +111,7 @@ ESX.RegisterUsableItem('burger', function(source)
 	xPlayer.removeInventoryItem('burger', 1)
 	TriggerClientEvent('esx_status:add', source, 'hunger', 300000)
 	TriggerClientEvent('esx_basicneeds:onEat', source, 'prop_cs_burger_01')
-    TriggerClientEvent('esx:showNotification', source, 'Vous avez mangé un ~b~Burger')
+    TriggerClientEvent('esx:showNotification', source, _U('eat_burger'))
 end)
 
 ESX.RegisterUsableItem('tacos', function(source)
@@ -119,5 +119,5 @@ ESX.RegisterUsableItem('tacos', function(source)
 	xPlayer.removeInventoryItem('tacos', 1)
 	TriggerClientEvent('esx_status:add', source, 'hunger', 500000)
 	TriggerClientEvent('esx_basicneeds:onEat', source, 'prop_taco_01')
-    TriggerClientEvent('esx:showNotification', source, 'Vous avez mangé un ~b~Tacos')
+    TriggerClientEvent('esx:showNotification', source, _U('eat_taco'))
 end)
