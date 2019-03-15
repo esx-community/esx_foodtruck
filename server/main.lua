@@ -11,7 +11,7 @@ if Config.MaxInService ~= -1 then
 end
 
 AddEventHandler('onMySQLReady', function ()
-	MySQL.Async.fetchAll("SELECT * FROM `shops` WHERE `name` = 'Market'",
+	MySQL.Async.fetchAll("SELECT * FROM `shops` WHERE `store` = 'Market'",
 		{},
 		function(result)
 			MySQL.Async.fetchAll("SELECT * FROM `items`",
