@@ -25,7 +25,7 @@ INSERT INTO `items` (`name`, `label`, `limit`) VALUES
     ('burger', 'Burger', 20)
 ;
 
-INSERT INTO `shops` (`name`, `item`, `price`) VALUES
+INSERT INTO `shops` (`store`, `item`, `price`) VALUES
 ('Market', 'cola', 100),
 ('Market', 'vegetables', 100),
 ('Market', 'meat', 100)
