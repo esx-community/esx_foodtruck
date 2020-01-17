@@ -1,13 +1,7 @@
-ESX                             = nil
-local PlayerData                = {}
-local HasAlreadyEnteredMarker   = false
-local LastZone                  = nil
-local CurrentAction             = nil
-local CurrentActionMsg          = ''
-local CurrentActionData         = {}
-local OnJob                     = false
-local Cooking 					= false
-local FoodInPlace				= nil
+ESX = nil
+local PlayerData, CurrentActionData = {}, {}
+local LastZone, CurrentAction, CurrentActionMsg, FoodInPlace
+local OnJob, Cooking, HasAlreadyEnteredMarker = false, false, false
 
 Citizen.CreateThread(function()
 	while ESX == nil do
@@ -17,14 +11,12 @@ Citizen.CreateThread(function()
 end)
 
 function OpenCookingMenu(grill)
-
 	local elements = {
 		head = {_U('recipe'), _U('ingredients'), _U('action')},
 		rows = {}
 	}
 
 	for k,v in pairs(Config.Recipes) do
-
 		local ingredients = ""
 
 		for l,w in pairs(v.Ingredients) do
@@ -42,8 +34,7 @@ function OpenCookingMenu(grill)
 		})
 	end
 
-	ESX.UI.Menu.Open(
-		'list', GetCurrentResourceName(), 'foodtruck',
+	ESX.UI.Menu.Open('list', GetCurrentResourceName(), 'foodtruck',
 		elements,
 		function(data, menu)
 			if data.value == 'cook' then
@@ -144,18 +135,16 @@ function OpenCookingMenu(grill)
 			CurrentAction     = 'foodtruck_cook'
 			CurrentActionMsg  = _U('start_cooking_hint')
 			CurrentActionData = {}
-		end,
-		function(data, menu)
+		end, function(data, menu)
+
 			menu.close()
 			CurrentAction     = 'foodtruck_cook'
 			CurrentActionMsg  = _U('start_cooking_hint')
 			CurrentActionData = {}
-		end
-	)
+		end)
 end
 
 function OpenFoodTruckActionsMenu()
-
 	local elements = {
 		{label = _U('vehicle_list'), 	value = 'vehicle_list'},
 		{label = _U('job_clothes'), 	value = 'cloakroom'},
@@ -168,13 +157,11 @@ function OpenFoodTruckActionsMenu()
 
 	ESX.UI.Menu.CloseAll()
 
-	ESX.UI.Menu.Open(
-		'default', GetCurrentResourceName(), 'foodtruck_actions',
-		{
+	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'foodtruck_actions', {
 			title    = _U('blip_foodtruck'),
 			elements = elements
-		},
-		function(data, menu)
+		}, function(data, menu)
+
 			if data.current.value == 'vehicle_list' then
 				local elements = {
 					{label = 'FoodTruck', value = 'taco'}
@@ -182,24 +169,20 @@ function OpenFoodTruckActionsMenu()
 
 				ESX.UI.Menu.CloseAll()
 
-				ESX.UI.Menu.Open(
-					'default', GetCurrentResourceName(), 'spawn_vehicle',
-					{
+				ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'spawn_vehicle', {
 						title    = _U('vehicles'),
 						elements = elements
-					},
-					function(data, menu)
+					}, function(data, menu)
+
 						local playerPed = GetPlayerPed(-1)
 						local coords    = Config.Zones.VehicleSpawnPoint.Pos
 						ESX.Game.SpawnVehicle(data.current.value, coords, 230.0, function(vehicle)
 							TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
 						end)	
 						ESX.UI.Menu.CloseAll()
-					end,
-					function(data, menu)
+					end,function(data, menu)
 						menu.close()
-					end
-				)
+					end)
 			end
 
 			if data.current.value == 'cloakroom' then
@@ -225,17 +208,13 @@ function OpenFoodTruckActionsMenu()
                 TriggerEvent('esx_society:openBossMenu', 'foodtruck', function(data, menu)
                     menu.close()
                 end)
-
             end
-
-		end,
-		function(data, menu)
+		end, function(data, menu)
 			menu.close()
 			CurrentAction     = 'foodtruck_actions_menu'
 			CurrentActionMsg  = _U('foodtruck_actions_menu')
 			CurrentActionData = {}
-		end
-	)
+		end)
 end
 
 RegisterNetEvent('esx_foodtruck:refreshMarket')
@@ -246,7 +225,6 @@ end)
 function OpenFoodTruckMarketMenu()
 	if PlayerData.job ~= nil and PlayerData.job.grade_name == 'boss' then
 		ESX.TriggerServerCallback('esx_foodtruck:getStock', function(fridge, MarketPrices)
-
 			local elements = {
 				head = {_U('ingredients'), _U('price_unit'), _U('on_you'), _U('action')},
 				rows = {}
@@ -273,13 +251,11 @@ function OpenFoodTruckMarketMenu()
 						break
 					end
 				end
-
 			end
 
 			ESX.UI.Menu.CloseAll()
 
-			ESX.UI.Menu.Open(
-				'list', GetCurrentResourceName(), 'foodtruck', elements,
+			ESX.UI.Menu.Open('list', GetCurrentResourceName(), 'foodtruck', elements,
 				function(data, menu)
 					if data.value == 'buy10' then
 						TriggerServerEvent('esx_foodtruck:buyItem', 10, data.data.name)
@@ -287,14 +263,12 @@ function OpenFoodTruckMarketMenu()
 						TriggerServerEvent('esx_foodtruck:buyItem', 50, data.data.name)
 					end
 					menu.close()
-				end,
-				function(data, menu)
+				end, function(data, menu)
 					menu.close()
 					CurrentAction     = 'foodtruck_market_menu'
 					CurrentActionMsg  = _U('foodtruck_market_menu')
 					CurrentActionData = {}
-				end
-			)
+				end)
 		end)
 	else
 		ESX.ShowNotification(_U('need_more_exp'))
@@ -302,13 +276,12 @@ function OpenFoodTruckMarketMenu()
 end
 
 function OpenFoodTruckBilling()
-	ESX.UI.Menu.Open(
-		'dialog', GetCurrentResourceName(), 'billing',
-		{
+	ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'billing', {
 			title = _U('bill_amount')
-		},
-		function(data, menu)
+		}, function(data, menu)
+
 			local amount = tonumber(data.value)
+
 			if amount == nil then
 				ESX.ShowNotification(_U('invalid_amount'))
 			else							
@@ -320,36 +293,29 @@ function OpenFoodTruckBilling()
 					TriggerServerEvent('esx_billing:sendBill', GetPlayerServerId(closestPlayer), 'society_foodtruck', 'RasTacos', amount)
 				end
 			end
-		end,
-	function(data, menu)
+		end, function(data, menu)
 		menu.close()
-	end
-	)
+	end)
 end
 
 function OpenMobileFoodTruckActionsMenu()
 
 	ESX.UI.Menu.CloseAll()
 
-	ESX.UI.Menu.Open(
-		'default', GetCurrentResourceName(), 'mobile_foodtruck_actions',
-		{
+	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'mobile_foodtruck_actions', {
 			title    = _U('blip_foodtruck'),
 			align    = 'top-left',
 			elements = {
 				{label = _U('billing'), 	value = 'billing'},
 				{label = _U('gears'), 	value = 'gears'}
 			}
-		},
-		function(data, menu)
+		}, function(data, menu)
 			if data.current.value == 'billing' then
 				OpenFoodTruckBilling()
 			elseif data.current.value == 'cook' then
 				OpenCookingMenu()
 			elseif data.current.value == 'gears' then
-				ESX.UI.Menu.Open(
-					'default', GetCurrentResourceName(), 'foodtruck_gears',
-					{
+				ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'foodtruck_gears', {
 						title    = _U('gear'),
 						align    = 'top-left',
 						elements = {
@@ -358,8 +324,8 @@ function OpenMobileFoodTruckActionsMenu()
 							{label = _U('chair'), 	value = 'prop_table_03_chr'}, --'prop_cs_steak'prop_table_03_chr
 		  					{label = _U('clean'),   value = 'clean'}
 						},
-					},
-					function(data, menu)
+					}, function(data, menu)
+
 						if data.current.value ~= 'clean' then
 							local playerPed = GetPlayerPed(-1)							
 							local x, y, z   = table.unpack(GetEntityCoords(playerPed))
@@ -389,18 +355,13 @@ function OpenMobileFoodTruckActionsMenu()
 								ESX.ShowNotification(_U('clean_too_far'))
 							end
 						end
-
-					end,
-					function(data, menu)
+					end, function(data, menu)
 						menu.close()
-					end
-				)
+					end)
 			end
-		end,
-		function(data, menu)
+		end, function(data, menu)
 			menu.close()
-		end
-	)
+		end)
 end
 
 RegisterNetEvent('esx:playerLoaded')
@@ -478,7 +439,6 @@ Citizen.CreateThread(function()
 	while true do
 		Wait(0)
 		if PlayerData.job ~= nil and PlayerData.job.name == 'foodtruck' then
-
 			local coords = GetEntityCoords(GetPlayerPed(-1))
 
 			for k,v in pairs(Config.Zones) do
@@ -581,9 +541,7 @@ Citizen.CreateThread(function()
 					closestDistance = distance
 					closestEntity   = object
 				end
-
 			end
-
 		end
 
 		if closestDistance ~= -1 and closestDistance <= 3.0 then
@@ -603,9 +561,7 @@ Citizen.CreateThread(function()
 				TriggerEvent('esx_foodtruck:hasExitedEntityZone', LastEntity)
 				LastEntity = nil
 			end
-
 		end
-
 	end
 end)
 
@@ -647,9 +603,7 @@ Citizen.CreateThread(function()
                 end
 
                 CurrentAction = nil
-
             end
-            
         end
 
         if IsControlJustReleased(0, 167) and PlayerData.job ~= nil and PlayerData.job.name == 'foodtruck' then
