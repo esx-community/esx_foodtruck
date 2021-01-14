@@ -5,6 +5,7 @@ MarketPrices		= {}
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 TriggerEvent('esx_phone:registerNumber', 'foodtruck', 'Client FoodTruck', false, false)
+TriggerEvent('esx_society:registerSociety', 'foodtruck', 'Foodtruck', 'society_foodtruck', 'society_foodtruck', 'society_foodtruck', {type = 'public'})
 
 if Config.MaxInService ~= -1 then
 	TriggerEvent('esx_service:activateService', 'foodtruck', Config.MaxInService)
